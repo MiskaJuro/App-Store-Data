@@ -1,6 +1,6 @@
 {
-  "generated": 1771972337,
-  "generatedISO": "2026-02-24T22:32:17.135Z",
+  "generated": 1772244105,
+  "generatedISO": "2026-02-28T02:01:45.468Z",
   "totalCategories": 8,
   "totalApps": 56,
   "categories": [
@@ -322,8 +322,8 @@
           "name": "ProtoPirate",
           "description": "Car key fob decoder with 11 protocols (Kia, Chrysler/Jeep, StarLine, Scher-Khan, Subaru, Fiat, Ford, Suzuki), frequency selection (315/433/868 MHz), load/save .sub files, rolling code TX.",
           "category": "RF",
-          "version": "2.1.0",
-          "commit": "e2ad557ccc0108f5f4a3f843e839fd8a7ca80640",
+          "version": "2.2.0",
+          "commit": "77b4df3a49235472eacc0079f1daba8eb584a2ba",
           "owner": "jsauce454",
           "repo": "ProtoPirate-Bruce",
           "path": "/",
@@ -332,7 +332,7 @@
             "ProtoPirate.js"
           ],
           "slug": "jsauce454/ProtoPirate-Bruce/ProtoPirate Bruce",
-          "lastUpdated": 1771432128,
+          "lastUpdated": 1772244087,
           "metadataPath": "repositories/jsauce454/ProtoPirate-Bruce/ProtoPirate Bruce/metadata.json"
         },
         {
@@ -355,7 +355,7 @@
           "metadataPath": "repositories/BruceDevices/firmware/RF Brute Force/metadata.json"
         }
       ],
-      "lastUpdated": 1771432128
+      "lastUpdated": 1772244087
     },
     {
       "name": "Themes",
@@ -366,8 +366,8 @@
           "name": "Bebra First Creation",
           "description": "Anime theme. First place on first Bruce Theme contest! By BBebbra3312",
           "category": "Themes",
-          "version": "1.0.0",
-          "commit": "c3a78d4a4e431351833d8124109bc81f7c267b57",
+          "version": "1.0.1",
+          "commit": "84298735e27b7591bcd4cd6d8b20721d9e71eb12",
           "owner": "BruceDevices",
           "repo": "App-Store-Apps",
           "supported-screen-size": "320x170",
@@ -394,7 +394,7 @@
             "WIFI.png"
           ],
           "slug": "BruceDevices/App-Store-Apps/Bebra First Creation 320x170",
-          "lastUpdated": 1770861240,
+          "lastUpdated": 1772243047,
           "metadataPath": "repositories/BruceDevices/App-Store-Apps/Bebra First Creation 320x170/metadata.json"
         },
         {
@@ -1326,7 +1326,7 @@
           "metadataPath": "repositories/BruceDevices/App-Store-Apps/Watch Dogs 320x170/metadata.json"
         }
       ],
-      "lastUpdated": 1771781293
+      "lastUpdated": 1772243047
     },
     {
       "name": "Tools",
@@ -1553,11 +1553,11 @@
             }
           ],
           "slug": "BruceDevices/firmware/WiFi Brute Force",
-          "lastUpdated": 1770902042,
+          "lastUpdated": 1772244078,
           "metadataPath": "repositories/BruceDevices/firmware/WiFi Brute Force/metadata.json"
         }
       ],
-      "lastUpdated": 1770902042
+      "lastUpdated": 1772244078
     }
   ]
 }
