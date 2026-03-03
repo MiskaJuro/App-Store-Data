@@ -1,8 +1,8 @@
 {
-  "generated": 1772244105,
-  "generatedISO": "2026-02-28T02:01:45.468Z",
+  "generated": 1772536050,
+  "generatedISO": "2026-03-03T11:07:30.931Z",
   "totalCategories": 8,
-  "totalApps": 56,
+  "totalApps": 58,
   "categories": [
     {
       "name": "Audio",
@@ -360,7 +360,7 @@
     {
       "name": "Themes",
       "slug": "themes",
-      "count": 28,
+      "count": 30,
       "apps": [
         {
           "name": "Bebra First Creation",
@@ -707,12 +707,12 @@
           "name": "Cyber Hacker",
           "description": "Cool matrix theme",
           "category": "Themes",
-          "version": "1.0.1",
-          "commit": "7f3c14d24cdd11d98bbaedc12287666777457330",
+          "version": "1.0.2",
+          "commit": "be37af82c91b7ebe37deeb1c548928228cd1c7e1",
           "owner": "CreeperRick",
           "repo": "BruceStore",
-          "supported-screen-size": "320x170",
-          "path": "/Cyber_Hacker/",
+          "supported-screen-size": "240x135",
+          "path": "/Cyber_Hacker_240x135/",
           "files": [
             {
               "source": "Cyber_Hacker.json",
@@ -735,20 +735,56 @@
             "RFID.gif",
             "WiFi.gif"
           ],
-          "slug": "CreeperRick/BruceStore/Cyber Hacker",
-          "lastUpdated": 1771351119,
-          "metadataPath": "repositories/CreeperRick/BruceStore/Cyber Hacker/metadata.json"
+          "slug": "CreeperRick/BruceStore/Cyber Hacker 240x135",
+          "lastUpdated": 1772536015,
+          "metadataPath": "repositories/CreeperRick/BruceStore/Cyber Hacker 240x135/metadata.json"
+        },
+        {
+          "name": "Cyber Hacker",
+          "description": "Cool matrix theme",
+          "category": "Themes",
+          "version": "1.0.2",
+          "commit": "2ba449dd939f39d5f720d1dd69253326c703b691",
+          "owner": "CreeperRick",
+          "repo": "BruceStore",
+          "supported-screen-size": "320x170",
+          "path": "/Cyber_Hacker_320x170/",
+          "files": [
+            {
+              "source": "Cyber_Hacker.json",
+              "destination": "Cyber Hacker.json"
+            },
+            "BLE.gif",
+            "Clock.gif",
+            "Config.gif",
+            "Connect.gif",
+            "Ethernet.gif",
+            "FM.gif",
+            "Files.gif",
+            "GPS.gif",
+            "IR.gif",
+            "JSInterpreter.gif",
+            "LoRa.gif",
+            "NRF24.gif",
+            "Others.gif",
+            "RF.gif",
+            "RFID.gif",
+            "WiFi.gif"
+          ],
+          "slug": "CreeperRick/BruceStore/Cyber Hacker 320x170",
+          "lastUpdated": 1772536015,
+          "metadataPath": "repositories/CreeperRick/BruceStore/Cyber Hacker 320x170/metadata.json"
         },
         {
           "name": "Cyber Hacker v2",
           "description": "Cool matrix theme, JS Interpreter menu is called 'Games'",
           "category": "Themes",
-          "version": "1.0.1",
-          "commit": "7f3c14d24cdd11d98bbaedc12287666777457330",
+          "version": "1.0.2",
+          "commit": "be37af82c91b7ebe37deeb1c548928228cd1c7e1",
           "owner": "CreeperRick",
           "repo": "BruceStore",
-          "supported-screen-size": "320x170",
-          "path": "/Cyber_Hacker/",
+          "supported-screen-size": "240x135",
+          "path": "/Cyber_Hacker_240x135/",
           "files": [
             {
               "source": "Cyber_Hacker_Game.json",
@@ -771,9 +807,45 @@
             "RFID.gif",
             "WiFi.gif"
           ],
-          "slug": "CreeperRick/BruceStore/Cyber Hacker v2",
-          "lastUpdated": 1771350656,
-          "metadataPath": "repositories/CreeperRick/BruceStore/Cyber Hacker v2/metadata.json"
+          "slug": "CreeperRick/BruceStore/Cyber Hacker v2 240x135",
+          "lastUpdated": 1772536015,
+          "metadataPath": "repositories/CreeperRick/BruceStore/Cyber Hacker v2 240x135/metadata.json"
+        },
+        {
+          "name": "Cyber Hacker v2",
+          "description": "Cool matrix theme, JS Interpreter menu is called 'Games'",
+          "category": "Themes",
+          "version": "1.0.2",
+          "commit": "2ba449dd939f39d5f720d1dd69253326c703b691",
+          "owner": "CreeperRick",
+          "repo": "BruceStore",
+          "supported-screen-size": "320x170",
+          "path": "/Cyber_Hacker_320x170/",
+          "files": [
+            {
+              "source": "Cyber_Hacker_Game.json",
+              "destination": "Cyber Hacker v2.json"
+            },
+            "BLE.gif",
+            "Clock.gif",
+            "Config.gif",
+            "Connect.gif",
+            "Ethernet.gif",
+            "FM.gif",
+            "Files.gif",
+            "GPS.gif",
+            "IR.gif",
+            "JSInterpreter1.gif",
+            "LoRa.gif",
+            "NRF24.gif",
+            "Others.gif",
+            "RF.gif",
+            "RFID.gif",
+            "WiFi.gif"
+          ],
+          "slug": "CreeperRick/BruceStore/Cyber Hacker v2 320x170",
+          "lastUpdated": 1772536015,
+          "metadataPath": "repositories/CreeperRick/BruceStore/Cyber Hacker v2 320x170/metadata.json"
         },
         {
           "name": "Cyberpunk 2077",
@@ -1326,7 +1398,7 @@
           "metadataPath": "repositories/BruceDevices/App-Store-Apps/Watch Dogs 320x170/metadata.json"
         }
       ],
-      "lastUpdated": 1772243047
+      "lastUpdated": 1772536015
     },
     {
       "name": "Tools",
