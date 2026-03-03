@@ -1,6 +1,6 @@
 {
   "category": "Themes",
-  "count": 28,
+  "count": 30,
   "apps": [
     {
       "name": "Bebra First Creation",
@@ -133,25 +133,49 @@
     {
       "name": "Cyber Hacker",
       "description": "Cool matrix theme",
-      "version": "1.0.1",
-      "supported-screen-size": "320x170",
-      "slug": "CreeperRick/BruceStore/Cyber Hacker",
+      "version": "1.0.2",
+      "supported-screen-size": "240x135",
+      "slug": "CreeperRick/BruceStore/Cyber Hacker 240x135",
       "n": "Cyber Hacker",
       "d": "Cool matrix theme",
-      "v": "1.0.1",
-      "s": "CreeperRick/BruceStore/Cyber Hacker",
+      "v": "1.0.2",
+      "s": "CreeperRick/BruceStore/Cyber Hacker 240x135",
+      "sss": "240x135"
+    },
+    {
+      "name": "Cyber Hacker",
+      "description": "Cool matrix theme",
+      "version": "1.0.2",
+      "supported-screen-size": "320x170",
+      "slug": "CreeperRick/BruceStore/Cyber Hacker 320x170",
+      "n": "Cyber Hacker",
+      "d": "Cool matrix theme",
+      "v": "1.0.2",
+      "s": "CreeperRick/BruceStore/Cyber Hacker 320x170",
       "sss": "320x170"
     },
     {
       "name": "Cyber Hacker v2",
       "description": "Cool matrix theme, JS Interpreter menu is called 'Games'",
-      "version": "1.0.1",
-      "supported-screen-size": "320x170",
-      "slug": "CreeperRick/BruceStore/Cyber Hacker v2",
+      "version": "1.0.2",
+      "supported-screen-size": "240x135",
+      "slug": "CreeperRick/BruceStore/Cyber Hacker v2 240x135",
       "n": "Cyber Hacker v2",
       "d": "Cool matrix theme, JS Interpreter menu is called 'Games'",
-      "v": "1.0.1",
-      "s": "CreeperRick/BruceStore/Cyber Hacker v2",
+      "v": "1.0.2",
+      "s": "CreeperRick/BruceStore/Cyber Hacker v2 240x135",
+      "sss": "240x135"
+    },
+    {
+      "name": "Cyber Hacker v2",
+      "description": "Cool matrix theme, JS Interpreter menu is called 'Games'",
+      "version": "1.0.2",
+      "supported-screen-size": "320x170",
+      "slug": "CreeperRick/BruceStore/Cyber Hacker v2 320x170",
+      "n": "Cyber Hacker v2",
+      "d": "Cool matrix theme, JS Interpreter menu is called 'Games'",
+      "v": "1.0.2",
+      "s": "CreeperRick/BruceStore/Cyber Hacker v2 320x170",
       "sss": "320x170"
     },
     {
