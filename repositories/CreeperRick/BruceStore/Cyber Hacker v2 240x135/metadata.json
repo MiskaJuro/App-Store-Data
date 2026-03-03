@@ -2,11 +2,11 @@
   "name": "Cyber Hacker v2",
   "description": "Cool matrix theme, JS Interpreter menu is called 'Games'",
   "category": "Themes",
-  "version": "1.0.1",
-  "commit": "7f3c14d24cdd11d98bbaedc12287666777457330",
+  "version": "1.0.2",
+  "commit": "be37af82c91b7ebe37deeb1c548928228cd1c7e1",
   "owner": "CreeperRick",
   "repo": "BruceStore",
-  "supported-screen-size": "320x170",
+  "supported-screen-size": "240x135",
   "path": "/Cyber_Hacker/",
   "files": [
     {
