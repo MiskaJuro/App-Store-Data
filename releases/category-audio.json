@@ -1,6 +1,6 @@
 {
   "category": "Audio",
-  "count": 4,
+  "count": 5,
   "apps": [
     {
       "name": "Cricket",
@@ -21,6 +21,16 @@
       "d": "Generate DTMF tones",
       "v": "1.0.1",
       "s": "BruceDevices/firmware/DTMF Tones"
+    },
+    {
+      "name": "Morse Code",
+      "description": "Convert text to morse code.",
+      "version": "1.0.0",
+      "slug": "MiskaJuro/bruce-applications/Morse-Code",
+      "n": "Morse Code",
+      "d": "Convert text to morse code.",
+      "v": "1.0.0",
+      "s": "MiskaJuro/bruce-applications/Morse-Code"
     },
     {
       "name": "Nokia",
