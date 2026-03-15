@@ -1033,43 +1033,43 @@ async function main() {
         let logoValidationFailed = false;
         
         // Check for metadata.json
-        console.log(`📄 \`metadata.json\``);
+        console.log(`    📄 \`metadata.json\``);
         if (fs.existsSync(metadataFile)) {
-            console.log(`    ✅ File exists`);
+            console.log(`        ✅ File exists`);
             metadataFound = true;
         } else {
-            console.log(`    ❌ File not found`);
+            console.log(`        ❌ File not found`);
             directoryValid = false;
         }
 
         // Check for logo.png first to determine logo validation status
-        console.log(`📄 \`logo.png\``);
+        console.log(`    📄 \`logo.png\``);
         if (fs.existsSync(logoPath)) {
-            console.log(`    ✅ File exists`);
+            console.log(`        ✅ File exists`);
             
             // Check logo dimensions
-            console.log(`    🔍 Checking logo dimensions...`);
+            console.log(`        🔍 Checking logo dimensions...`);
             const dimensions = getPngDimensions(logoPath);
             if (dimensions) {
                 const { width, height } = dimensions;
-                console.log(`        ℹ️ Logo size: ${width}x${height}`);
+                console.log(`            ℹ️ Logo size: ${width}x${height}`);
                 
                 if (width !== 128 || height !== 128) {
-                    console.log(`        ❌ Logo must be exactly 128x128 pixels: found ${width}x${height}`);
+                    console.log(`            ❌ Logo must be exactly 128x128 pixels: found ${width}x${height}`);
                     validationFailed = true;
                     directoryValid = false;
                     logoValidationFailed = true;
                 } else {
-                    console.log(`        ✅ Logo size valid: ${width}x${height}`);
+                    console.log(`            ✅ Logo size valid: ${width}x${height}`);
                 }
             } else {
-                console.log(`        ❌ Unable to read logo dimensions (not a valid PNG?)`);
+                console.log(`            ❌ Unable to read logo dimensions (not a valid PNG?)`);
                 validationFailed = true;
                 directoryValid = false;
                 logoValidationFailed = true;
             }
         } else {
-            console.log(`    ❌ File not found`);
+            console.log(`        ❌ File not found`);
             validationFailed = true;
             directoryValid = false;
             logoValidationFailed = true;
