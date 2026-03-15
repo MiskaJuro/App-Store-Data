@@ -204,77 +204,77 @@ function compareVersions(v1, v2) {
 }
 
 // Function to validate JSON structure
-async function validateMetadata(filePath, dir, prAuthor, logoValidationFailed = false) {
+async function validateMetadata(filePath, dir, prAuthor, logoValidationFailed = false, logoPath = null) {
     let hasErrors = logoValidationFailed; // Start with logo validation result
     let metadata;
     try {
         const content = fs.readFileSync(filePath, 'utf8');
         metadata = JSON.parse(content);
     } catch (error) {
-        console.log(`    - ❌ Invalid JSON format`);
+        console.log(`        ❌ Invalid JSON format`);
         return { success: false, metadataInfo: '' };
     }
-    console.log(`    - ✅ Valid JSON format`);
+    console.log(`        ✅ Valid JSON format`);
 
     // Required fields
     const requiredFields = ['name', 'category', 'description', 'version', 'commit', 'owner', 'repo', 'path'];
-    console.log(`    - 🔍 Checking required fields...`);
+    console.log(`        🔍 Checking required fields...`);
     // Check each required field exists
     let fieldsValid = true;
     for (const field of requiredFields) {
         if (!(field in metadata)) {
-            console.log(`      - ❌ Missing required field: \`${field}\``);
+            console.log(`            ❌ Missing required field: \`${field}\``);
             hasErrors = true;
             fieldsValid = false;
         } else {
             // Check field is not null or empty string
             const value = metadata[field];
             if (value === null || value === undefined || value === '') {
-                console.log(`      - ❌ Field \`${field}\` is null or empty`);
+                console.log(`            ❌ Field \`${field}\` is null or empty`);
                 hasErrors = true;
                 fieldsValid = false;
             } else {
-                console.log(`      - ✅ Field \`${field}\`: \`${value}\``);
+                console.log(`            ✅ Field \`${field}\`: \`${value}\``);
             }
         }
     }
 
     // Validate field formats
-    console.log(`    - 🔍 Validating fields...`);
+    console.log(`        🔍 Validating fields...`);
     if (metadata.version) {
         const version = metadata.version;
         if (!/^[0-9]+\.[0-9]+\.[0-9]+$/.test(version)) {
-            console.log(`      - ❌ Version \`${version}\` must be in format X.Y.Z`);
+            console.log(`            ❌ Version \`${version}\` must be in format X.Y.Z`);
             hasErrors = true;
         } else {
-            console.log(`      - ✅ Version format valid: \`${version}\``);
+            console.log(`            ✅ Version format valid: \`${version}\``);
         }
     }
 
     if (metadata.commit) {
         const commit = metadata.commit;
         if (!/^[a-f0-9]{40}$/.test(commit)) {
-            console.log(`      - ❌ Commit \`${commit}\` must be a valid 40-character SHA hash`);
+            console.log(`            ❌ Commit \`${commit}\` must be a valid 40-character SHA hash`);
             hasErrors = true;
         } else {
-            console.log(`      - ✅ Commit hash format valid: \`${commit}...\``);
+            console.log(`            ✅ Commit hash format valid: \`${commit}...\``);
 
             // Verify commit exists on GitHub using owner/repo from metadata
             if (metadata.owner && metadata.repo) {
                 const verification = await verifyCommitExists(metadata.owner, metadata.repo, commit);
                 
                 if (verification.exists) {
-                    console.log(`      - ✅ Commit \`${commit}...\` exists on GitHub`);
+                    console.log(`            ✅ Commit \`${commit}...\` exists on GitHub`);
                 } else if (verification.status === 404) {
-                    console.log(`      - ❌ Commit \`${commit}...\` not found in ${metadata.owner}/${metadata.repo}`);
+                    console.log(`            ❌ Commit \`${commit}...\` not found in ${metadata.owner}/${metadata.repo}`);
                     hasErrors = true;
                 } else if (verification.error) {
-                    console.log(`      - ⚠️  Could not verify commit on GitHub: ${verification.error}`);
+                    console.log(`            ⚠️  Could not verify commit on GitHub: ${verification.error}`);
                 } else {
-                    console.log(`      - ⚠️  Could not verify commit on GitHub (status: ${verification.status})`);
+                    console.log(`            ⚠️  Could not verify commit on GitHub (status: ${verification.status})`);
                 }
             } else {
-                console.log(`      - ⚠️  Cannot verify commit without owner/repo information`);
+                console.log(`            ⚠️  Cannot verify commit without owner/repo information`);
             }
         }
     }
@@ -284,13 +284,13 @@ async function validateMetadata(filePath, dir, prAuthor, logoValidationFailed = 
         const category = metadata.category;
         const validCategories = loadValidCategories();
         if (!validCategories) {
-            console.log(`      - ❌ Could not load valid categories list`);
+            console.log(`            ❌ Could not load valid categories list`);
             hasErrors = true;
         } else if (!validCategories.includes(category)) {
-            console.log(`      - ❌ Category \`${category}\` is not in valid list: ${validCategories.join(', ')}`);
+            console.log(`            ❌ Category \`${category}\` is not in valid list: ${validCategories.join(', ')}`);
             hasErrors = true;
         } else {
-            console.log(`      - ✅ Category valid: \`${category}\``);
+            console.log(`            ✅ Category valid: \`${category}\``);
         }
     }
 
@@ -298,30 +298,30 @@ async function validateMetadata(filePath, dir, prAuthor, logoValidationFailed = 
     const isTheme = metadata.category === 'Themes' || metadata.category === 'Theme';
     if (isTheme) {
         if (!metadata['supported-screen-size']) {
-            console.log(`      - ❌ Field 'supported-screen-size' is required for themes`);
+            console.log(`            ❌ Field 'supported-screen-size' is required for themes`);
             hasErrors = true;
         } else {
             const screenSize = metadata['supported-screen-size'];
             if (typeof screenSize !== 'string') {
-                console.log(`      - ❌ supported-screen-size must be a string`);
+                console.log(`            ❌ supported-screen-size must be a string`);
                 hasErrors = true;
             } else if (!/^\d+x\d+$/.test(screenSize)) {
-                console.log(`      - ❌ supported-screen-size must be in format 'widthxheight' (e.g., '320x170')`);
+                console.log(`            ❌ supported-screen-size must be in format 'widthxheight' (e.g., '320x170')`);
                 hasErrors = true;
             } else {
                 const [width, height] = screenSize.split('x').map(Number);
                 if (width <= 0 || height <= 0) {
-                    console.log(`      - ❌ supported-screen-size dimensions must be positive numbers`);
+                    console.log(`            ❌ supported-screen-size dimensions must be positive numbers`);
                     hasErrors = true;
                 } else {
-                    console.log(`      - ✅ Screen size valid: \`${screenSize}\` (${width}x${height})`);
+                    console.log(`            ✅ Screen size valid: \`${screenSize}\` (${width}x${height})`);
                 }
             }
         }
     } else {
         // For non-themes, supported-screen-size should not be present
         if (metadata['supported-screen-size']) {
-            console.log(`      - ❌ Field 'supported-screen-size' is only allowed for themes`);
+            console.log(`            ❌ Field 'supported-screen-size' is only allowed for themes`);
             hasErrors = true;
         }
     }
@@ -329,14 +329,14 @@ async function validateMetadata(filePath, dir, prAuthor, logoValidationFailed = 
     // Validate supported-devices (not allowed for themes)
     if (metadata['supported-devices']) {
         if (isTheme) {
-            console.log(`      - ❌ Field 'supported-devices' is not allowed for themes`);
+            console.log(`            ❌ Field 'supported-devices' is not allowed for themes`);
             hasErrors = true;
         } else {
             const supportedDevices = metadata['supported-devices'];
             const validDevices = loadSupportedDevices();
             
             if (!validDevices) {
-                console.log(`      - ❌ Could not load supported devices list`);
+                console.log(`            ❌ Could not load supported devices list`);
                 hasErrors = true;
             } else {
                 if (Array.isArray(supportedDevices)) {
@@ -344,18 +344,18 @@ async function validateMetadata(filePath, dir, prAuthor, logoValidationFailed = 
                     let allValid = true;
                     for (const device of supportedDevices) {
                         if (!validDevices.includes(device)) {
-                            console.log(`      - ❌ Device \`${device}\` is not in supported devices list`);
+                            console.log(`            ❌ Device \`${device}\` is not in supported devices list`);
                             hasErrors = true;
                             allValid = false;
                         }
                     }
                     if (allValid) {
-                        console.log(`      - ✅ All devices valid: \`${supportedDevices.join(', ')}\``);
+                        console.log(`            ✅ All devices valid: \`${supportedDevices.join(', ')}\``);
                     }
                 } else if (typeof supportedDevices === 'string') {
                     // Check if it's a direct device name or regex pattern
                     if (validDevices.includes(supportedDevices)) {
-                        console.log(`      - ✅ Device valid: \`${supportedDevices}\``);
+                        console.log(`            ✅ Device valid: \`${supportedDevices}\``);
                     } else {
                         // Try as regex pattern
                         try {
@@ -363,18 +363,18 @@ async function validateMetadata(filePath, dir, prAuthor, logoValidationFailed = 
                             const matchingDevices = validDevices.filter(device => regex.test(device));
                             
                             if (matchingDevices.length > 0) {
-                                console.log(`      - ✅ Regex pattern \`${supportedDevices}\` matches ${matchingDevices.length} devices: ${matchingDevices.join(', ')}`);
+                                console.log(`            ✅ Regex pattern \`${supportedDevices}\` matches ${matchingDevices.length} devices: ${matchingDevices.join(', ')}`);
                             } else {
-                                console.log(`      - ❌ Regex pattern \`${supportedDevices}\` doesn't match any devices`);
+                                console.log(`            ❌ Regex pattern \`${supportedDevices}\` doesn't match any devices`);
                                 hasErrors = true;
                             }
                         } catch (regexError) {
-                            console.log(`      - ❌ Invalid device name or regex pattern: \`${supportedDevices}\``);
+                            console.log(`            ❌ Invalid device name or regex pattern: \`${supportedDevices}\``);
                             hasErrors = true;
                         }
                     }
                 } else {
-                    console.log(`      - ❌ supported-devices must be a string, regex pattern, or array of device names`);
+                    console.log(`            ❌ supported-devices must be a string, regex pattern, or array of device names`);
                     hasErrors = true;
                 }
             }
@@ -383,37 +383,37 @@ async function validateMetadata(filePath, dir, prAuthor, logoValidationFailed = 
 
     // Validate folder structure matches /repositories/owner/reponame/ format
     if (metadata.owner && metadata.repo) {
-        console.log(`    - 🔍 Checking folder structure...`);
+        console.log(`        🔍 Checking folder structure...`);
         const expectedPath = `repositories/${metadata.owner}/${metadata.repo}`;
         const actualPath = path.dirname(filePath).replace(/\\/g, '/'); // Normalize path separators
         
         if (actualPath.includes(expectedPath)) {
-            console.log(`      - ✅ Folder structure valid: contains \`${expectedPath}\``);
+            console.log(`            ✅ Folder structure valid: contains \`${expectedPath}\``);
         } else {
-            console.log(`      - ❌ Folder structure invalid: expected path containing \`${expectedPath}\`, got \`${actualPath}\``);
+            console.log(`            ❌ Folder structure invalid: expected path containing \`${expectedPath}\`, got \`${actualPath}\``);
             hasErrors = true;
         }
     } else {
-        console.log(`    - ⚠️  Cannot validate folder structure without owner/repo information`);
+        console.log(`        ⚠️  Cannot validate folder structure without owner/repo information`);
     }
 
     // Validate files array if present
     if (metadata.files) {
-        console.log(`    - 🔍 Validating files array...`);
+        console.log(`        🔍 Validating files array...`);
         
         if (!Array.isArray(metadata.files)) {
-            console.log(`      - ❌ Field \`files\` must be an array`);
+            console.log(`            ❌ Field \`files\` must be an array`);
             hasErrors = true;
         } else {
-            console.log(`      - ✅ Files field is a valid array with ${metadata.files.length} entries`);
+            console.log(`            ✅ Files field is a valid array with ${metadata.files.length} entries`);
             
             // Check each file exists in the repository at the specified commit
             if (metadata.owner && metadata.repo && metadata.commit) {
-                console.log(`      - 🔍 Fetching repository file tree...`);
+                console.log(`            🔍 Fetching repository file tree...`);
                 const repositoryFiles = await getRepositoryFiles(metadata.owner, metadata.repo, metadata.commit);
                 
                 if (repositoryFiles) {
-                    console.log(`      - ✅ Repository tree loaded (${repositoryFiles.size} files)`);
+                    console.log(`            ✅ Repository tree loaded (${repositoryFiles.size} files)`);
                     
                     for (const file of metadata.files) {
                         let filePath;
@@ -452,17 +452,17 @@ async function validateMetadata(filePath, dir, prAuthor, logoValidationFailed = 
                         
                         // Check if file exists in the repository tree
                         if (repositoryFiles.has(filePath)) {
-                            console.log(`      - ✅ File exists at commit: \`${displayPath}\` (path: ${filePath})`);
+                            console.log(`            ✅ File exists at commit: \`${displayPath}\` (path: ${filePath})`);
                         } else {
-                            console.log(`      - ❌ File not found at commit \`${metadata.commit}...\`: \`${displayPath}\` (expected path: ${filePath})`);
+                            console.log(`            ❌ File not found at commit \`${metadata.commit}...\`: \`${displayPath}\` (expected path: ${filePath})`);
                             hasErrors = true;
                         }
                     }
                 } else {
-                    console.log(`      - ⚠️  Could not verify files - repository tree unavailable`);
+                    console.log(`            ⚠️  Could not verify files - repository tree unavailable`);
                 }
             } else {
-                console.log(`      - ⚠️  Cannot verify files without owner/repo/commit information`);
+                console.log(`            ⚠️  Cannot verify files without owner/repo/commit information`);
             }
         }
     }
@@ -474,63 +474,63 @@ async function validateMetadata(filePath, dir, prAuthor, logoValidationFailed = 
     let versionStatus = 'new version';
 
     if (!hasErrors) {
-        console.log(`    - 🔍 Checking version history...`);
+        console.log(`        🔍 Checking version history...`);
         // Try to get the previous version from base branch
         const baseBranch = process.env.GITHUB_BASE_REF || 'main';
         const previousContent = gitCommand(`git show origin/${baseBranch}:"${filePath}"`) || 
                                gitCommand(`git show ${baseBranch}:"${filePath}"`) ||
                                gitCommand(`git show origin/main:"${filePath}"`) || 
                                gitCommand(`git show main:"${filePath}"`);
-        console.log(`      - 🔍 Current version: ${metadata.version}`);
+        console.log(`            🔍 Current version: ${metadata.version}`);
         
         if (previousContent) {
-            console.log(`      - ✅ Found previous file in main branch`);
+            console.log(`            ✅ Found previous file in main branch`);
             try {
                 const previousMetadata = JSON.parse(previousContent);
                 if (previousMetadata.version) {
                     previousVersion = previousMetadata.version;
                     previousCommit = previousMetadata.commit || '';
-                    console.log(`      - 📋 Previous version: ${previousVersion}`);
+                    console.log(`            📋 Previous version: ${previousVersion}`);
 
                     const versionComparison = compareVersions(metadata.version, previousVersion);
                     if (versionComparison > 0) {
                         // Check if commit has been updated even with version increment
                         if (previousCommit && metadata.commit && previousCommit === metadata.commit) {
-                            console.log(`      - ❌ Commit must be updated: ${metadata.commit}... is same as previous commit`);
+                            console.log(`            ❌ Commit must be updated: ${metadata.commit}... is same as previous commit`);
                             versionStatus = `${previousVersion} → ${metadata.version} (❌ Same commit)`;
                             hasErrors = true;
                         } else {
                             versionStatus = `${previousVersion} → ${metadata.version} (✅ Version updated)`;
-                            console.log(`      - ✅ Version updated: ${previousVersion} → ${metadata.version}`);
+                            console.log(`            ✅ Version updated: ${previousVersion} → ${metadata.version}`);
                         }
                     } else if (versionComparison === 0) {
                         versionStatus = `${metadata.version} (❌ Version unchanged)`;
-                        console.log(`      - ❌ Version must be incremented: ${metadata.version} is same as previous version`);
+                        console.log(`            ❌ Version must be incremented: ${metadata.version} is same as previous version`);
                         hasErrors = true;
                     } else {
                         versionStatus = `${metadata.version} (❌ Version downgrade)`;
-                        console.log(`      - ❌ Version must be incremented: ${metadata.version} is lower than previous ${previousVersion}`);
+                        console.log(`            ❌ Version must be incremented: ${metadata.version} is lower than previous ${previousVersion}`);
                         hasErrors = true;
                     }
                 } else {
-                    console.log(`      - ⚠️ Previous file has no version field`);
+                    console.log(`            ⚠️ Previous file has no version field`);
                     versionStatus = `${metadata.version} (🆕 New submission)`;
-                    console.log(`      - ✅ New version added: ${metadata.version}`);
+                    console.log(`            ✅ New version added: ${metadata.version}`);
                 }
             } catch (error) {
-                console.log(`      - ⚠️ Previous file is not valid JSON: ${error.message}`);
+                console.log(`            ⚠️ Previous file is not valid JSON: ${error.message}`);
                 versionStatus = `${metadata.version} (🆕 New submission)`;
-                console.log(`      - ✅ New app detected: ${metadata.version}`);
+                console.log(`            ✅ New app detected: ${metadata.version}`);
             }
         } else {
-            console.log(`      - ⚠️ No previous file found in main branch`);
+            console.log(`            ⚠️ No previous file found in main branch`);
             versionStatus = `${metadata.version} (🆕 New submission)`;
-            console.log(`      - ✅ New app detected: ${metadata.version}`);
+            console.log(`            ✅ New app detected: ${metadata.version}`);
         }
     }
 
     if (!hasErrors) {
-        console.log(`    - ✅ All validation checks passed`);
+        console.log(`        ✅ All validation checks passed`);
     }
 
     // Store metadata info for PR comment
@@ -538,7 +538,7 @@ async function validateMetadata(filePath, dir, prAuthor, logoValidationFailed = 
     const repo = metadata.repo;
     let compareLink = '';
 
-    console.log(`      - 🔍 Compare link check:`);
+    console.log(`            🔍 Compare link check:`);
     
     // Create commit links
     const previousCommitLink = previousCommit ? 
@@ -547,31 +547,31 @@ async function validateMetadata(filePath, dir, prAuthor, logoValidationFailed = 
         `https://github.com/${owner}/${repo}/commit/${metadata.commit}` : null;
     
     if (previousCommitLink) {
-        console.log(`        - Previous commit: [${previousCommit.substring(0, 8)}...](${previousCommitLink})`);
+        console.log(`                Previous commit: [${previousCommit.substring(0, 8)}...](${previousCommitLink})`);
     } else {
-        console.log(`        - Previous commit: \`None\``);
+        console.log(`                Previous commit: \`None\``);
     }
     
     if (currentCommitLink) {
-        console.log(`        - Current commit: [${metadata.commit.substring(0, 8)}...](${currentCommitLink})`);
+        console.log(`                Current commit: [${metadata.commit.substring(0, 8)}...](${currentCommitLink})`);
     } else {
-        console.log(`        - Current commit: \`None\``);
+        console.log(`                Current commit: \`None\``);
     }
     
-    console.log(`        - Owner/Repo: ${owner}/${repo}`);
+    console.log(`                Owner/Repo: ${owner}/${repo}`);
 
     if (previousCommit && metadata.commit && previousCommit !== metadata.commit) {
         compareLink = `https://github.com/${owner}/${repo}/compare/${previousCommit}...${metadata.commit}`;
-        console.log(`        - ✅ Compare link generated: ${compareLink}`);
+        console.log(`                ✅ Compare link generated: ${compareLink}`);
     } else {
         if (!previousCommit) {
-            console.log(`        - ⚠️ No previous commit available`);
+            console.log(`                ⚠️ No previous commit available`);
         } else if (!metadata.commit) {
-            console.log(`        - ⚠️ No current commit available`);
+            console.log(`                ⚠️ No current commit available`);
         } else if (previousCommit === metadata.commit) {
-            console.log(`        - ℹ️ Commits are identical, no changes to compare`);
+            console.log(`                ℹ️ Commits are identical, no changes to compare`);
         }
-        console.log(`        - 🚫 No compare link generated`);
+        console.log(`                🚫 No compare link generated`);
     }
 
     // Write metadata info to return for PR comment
@@ -591,6 +591,32 @@ async function validateMetadata(filePath, dir, prAuthor, logoValidationFailed = 
         metadataInfo += `- **Changes:** [View commit comparison](${compareLink})\n`;
     }
     metadataInfo += '\n';
+
+    // Add logo validation output at the end of metadata validation
+    if (logoPath) {
+        console.log(`        📄 \`logo.png\``);
+        if (fs.existsSync(logoPath)) {
+            console.log(`            ✅ File exists`);
+            
+            // Check logo dimensions
+            console.log(`            🔍 Checking logo dimensions...`);
+            const dimensions = getPngDimensions(logoPath);
+            if (dimensions) {
+                const { width, height } = dimensions;
+                console.log(`                ℹ️ Logo size: ${width}x${height}`);
+                
+                if (width !== 128 || height !== 128) {
+                    console.log(`                ❌ Logo must be exactly 128x128 pixels: found ${width}x${height}`);
+                } else {
+                    console.log(`                ✅ Logo size valid: ${width}x${height}`);
+                }
+            } else {
+                console.log(`                ❌ Unable to read logo dimensions (not a valid PNG?)`);
+            }
+        } else {
+            console.log(`            ❌ File not found`);
+        }
+    }
 
     return { success: !hasErrors, metadataInfo }; // Return success status and metadata info
 }
@@ -1065,37 +1091,13 @@ async function main() {
         }
 
         if (fs.existsSync(metadataFile)) {
-            const result = await validateMetadata(metadataFile, dirPath, prAuthor, logoValidationFailed);
+            const result = await validateMetadata(metadataFile, dirPath, prAuthor, logoValidationFailed, logoPath);
             if (!result.success) {
                 validationFailed = true;
                 hasInvalidMetadata = true;
                 directoryValid = false;
             }
             directoryMetadataInfo = result.metadataInfo;
-        }
-
-        // Now output logo validation
-        console.log(`    📄 \`logo.png\``);
-        if (fs.existsSync(logoPath)) {
-            console.log(`        ✅ File exists`);
-            
-            // Check logo dimensions
-            console.log(`        🔍 Checking logo dimensions...`);
-            const dimensions = getPngDimensions(logoPath);
-            if (dimensions) {
-                const { width, height } = dimensions;
-                console.log(`            ℹ️ Logo size: ${width}x${height}`);
-                
-                if (width !== 128 || height !== 128) {
-                    console.log(`            ❌ Logo must be exactly 128x128 pixels: found ${width}x${height}`);
-                } else {
-                    console.log(`            ✅ Logo size valid: ${width}x${height}`);
-                }
-            } else {
-                console.log(`            ❌ Unable to read logo dimensions (not a valid PNG?)`);
-            }
-        } else {
-            console.log(`        ❌ File not found`);
         }
         
         return { directoryValid, directoryMetadataInfo, hasMissingLogo: !fs.existsSync(logoPath) };
