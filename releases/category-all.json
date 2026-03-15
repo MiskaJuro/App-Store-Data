@@ -1,13 +1,13 @@
 {
-  "generated": 1772553923,
-  "generatedISO": "2026-03-03T16:05:23.765Z",
+  "generated": 1773584488,
+  "generatedISO": "2026-03-15T14:21:28.970Z",
   "totalCategories": 8,
-  "totalApps": 58,
+  "totalApps": 59,
   "categories": [
     {
       "name": "Audio",
       "slug": "audio",
-      "count": 4,
+      "count": 5,
       "apps": [
         {
           "name": "Cricket",
@@ -45,6 +45,25 @@
           "metadataPath": "repositories/BruceDevices/firmware/DTMF Tones/metadata.json"
         },
         {
+          "name": "Morse Code",
+          "description": "Convert text to morse code.",
+          "category": "Audio",
+          "version": "1.0.0",
+          "commit": "df54096328c96f9e373c909f8f9dfa2e9f871cfc",
+          "owner": "MiskaJuro",
+          "repo": "bruce-applications",
+          "path": "/Morse-Code/",
+          "files": [
+            {
+              "source": "morse-code.js",
+              "destination": "Morse Code.js"
+            }
+          ],
+          "slug": "MiskaJuro/bruce-applications/Morse-Code",
+          "lastUpdated": 1773584432,
+          "metadataPath": "repositories/MiskaJuro/bruce-applications/Morse-Code/metadata.json"
+        },
+        {
           "name": "Nokia",
           "description": "plays Nokia ringtone",
           "category": "Audio",
@@ -77,7 +96,7 @@
           "metadataPath": "repositories/emericklaw/Bruce-Tone-Generator-App/Tone Generator/metadata.json"
         }
       ],
-      "lastUpdated": 1771032333
+      "lastUpdated": 1773584432
     },
     {
       "name": "Games",
