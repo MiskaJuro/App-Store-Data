@@ -1035,47 +1035,35 @@ async function main() {
         // Check for metadata.json
         console.log(`    📄 \`metadata.json\``);
         if (fs.existsSync(metadataFile)) {
-            console.log(`    - ✅ File exists`);
+            console.log(`        ✅ File exists`);
             metadataFound = true;
         } else {
-            console.log(`    - ❌ File not found`);
+            console.log(`        ❌ File not found`);
             directoryValid = false;
         }
 
-        // Check for logo.png first to determine logo validation status
-        console.log(`    📄 \`logo.png\``);
+        // Validate metadata.json if it exists, passing logo validation result (we'll determine this first)
+        // First check logo validation status without outputting
         if (fs.existsSync(logoPath)) {
-            console.log(`    - ✅ File exists`);
-            
-            // Check logo dimensions
-            console.log(`    - 🔍 Checking logo dimensions...`);
             const dimensions = getPngDimensions(logoPath);
             if (dimensions) {
                 const { width, height } = dimensions;
-                console.log(`      - ℹ️ Logo size: ${width}x${height}`);
-                
                 if (width !== 128 || height !== 128) {
-                    console.log(`      - ❌ Logo must be exactly 128x128 pixels: found ${width}x${height}`);
+                    logoValidationFailed = true;
                     validationFailed = true;
                     directoryValid = false;
-                    logoValidationFailed = true;
-                } else {
-                    console.log(`      - ✅ Logo size valid: ${width}x${height}`);
                 }
             } else {
-                console.log(`      - ❌ Unable to read logo dimensions (not a valid PNG?)`);
+                logoValidationFailed = true;
                 validationFailed = true;
                 directoryValid = false;
-                logoValidationFailed = true;
             }
         } else {
-            console.log(`    - ❌ File not found`);
+            logoValidationFailed = true;
             validationFailed = true;
             directoryValid = false;
-            logoValidationFailed = true;
         }
 
-        // Validate metadata.json if it exists, passing logo validation result
         if (fs.existsSync(metadataFile)) {
             const result = await validateMetadata(metadataFile, dirPath, prAuthor, logoValidationFailed);
             if (!result.success) {
@@ -1084,6 +1072,30 @@ async function main() {
                 directoryValid = false;
             }
             directoryMetadataInfo = result.metadataInfo;
+        }
+
+        // Now output logo validation
+        console.log(`    📄 \`logo.png\``);
+        if (fs.existsSync(logoPath)) {
+            console.log(`        ✅ File exists`);
+            
+            // Check logo dimensions
+            console.log(`        🔍 Checking logo dimensions...`);
+            const dimensions = getPngDimensions(logoPath);
+            if (dimensions) {
+                const { width, height } = dimensions;
+                console.log(`            ℹ️ Logo size: ${width}x${height}`);
+                
+                if (width !== 128 || height !== 128) {
+                    console.log(`            ❌ Logo must be exactly 128x128 pixels: found ${width}x${height}`);
+                } else {
+                    console.log(`            ✅ Logo size valid: ${width}x${height}`);
+                }
+            } else {
+                console.log(`            ❌ Unable to read logo dimensions (not a valid PNG?)`);
+            }
+        } else {
+            console.log(`        ❌ File not found`);
         }
         
         return { directoryValid, directoryMetadataInfo, hasMissingLogo: !fs.existsSync(logoPath) };
